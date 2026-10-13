@@ -70,7 +70,7 @@ const SERVICES = [
       "Captions, hooks & calls to action (CTAs)",
       "Brand consistency & visual direction",
       "Post scheduling & content organization",
-      
+
     ],
     tags: ["Canva", "Adobe Photoshop", "META Business Suite", "Hootsuite"],
   },
@@ -160,14 +160,15 @@ const Services = () => {
             className="mt-6 mx-auto max-w-2xl text-sm md:text-base leading-relaxed"
             style={{ color: BODY }}
           >
-            I turn real business needs into{" "}
+            I combine{" "}
             <span
               className="font-semibold underline decoration-2 underline-offset-4"
               style={{ color: INK, textDecorationColor: RED }}
             >
-              working web and mobile products
-            </span>
-            , and I can handle the design and video to promote them too.
+              IT skills and creative design
+            </span>{" "}
+            to turn business ideas into digital products, create engaging videos, and
+            manage social media presence to help brands grow online.
           </p>
         </motion.div>
 
