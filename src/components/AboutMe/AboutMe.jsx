@@ -11,6 +11,8 @@ import {
   FaLinkedinIn,
   FaFacebookF,
   FaInstagram,
+  FaPenRuler,
+  FaClapperboard,
 } from "react-icons/fa6";
 
 // ===== PALETTE: same red / ink / off-white as the home page =====
@@ -26,8 +28,9 @@ const PHOTO_POSITION = "50% 25%";
 
 const THINGS_I_LOVE = [
   { icon: FaReact, label: "Building apps" },
-  { icon: FaFigma, label: "Design" },
-  { icon: FaCamera, label: "Photo & video" },
+  { icon: FaClapperboard, label: "Content Creation" },
+  { icon: FaPenRuler, label: "Creative Design" },
+  { icon: FaCamera, label: "Photo & video Editing" },
   { icon: FaDumbbell, label: "Training" },
 ];
 
@@ -38,7 +41,10 @@ const WHAT_I_CAN_DO = [
   "UI / UX & Website Design",
   "Next.js & React",
   "WordPress Websites",
-  "Video Editing",
+  "Video Editing & Content Creation",
+  "Social Media Engagement",
+  "Content Planning & Scheduling",
+  "Social Media Management",
 ];
 
 const SOCIALS = [
@@ -177,20 +183,21 @@ const AboutMe = () => {
             style={{ color: BODY }}
           >
             <p>
-              I&apos;m an IT graduate from Taguig who loves turning ideas into{" "}
-              <Underlined>fast, clean, good-looking products</Underlined>. I&apos;ve been building for the web
-              and mobile since college, from my capstone project to real client work.
+              I&apos;m an IT graduate from Taguig who enjoys turning ideas into{" "}
+              <Underlined>engaging digital experiences</Underlined>. From web and mobile
+              development to video editing and content creation, I love combining
+              technology with creativity.
             </p>
             <p>
-              My specialty is <Underlined>full-stack development</Underlined> with React, Next.js, React Native
-              and Node. I care about the details people actually notice: smooth interactions, clear layouts
-              and tidy, responsive UI that feels good on every screen.
+              My background spans <Underlined>full-stack development</Underlined> with
+              React, Next.js, React Native, and Node.js, alongside creating visuals
+              and content that are clean, purposeful, and user-friendly.
             </p>
             <p>
-              Beyond code, I love <Underlined>editing videos</Underlined>, shooting photos and creating
-              content. When I&apos;m not in front of a screen, you&apos;ll probably find me training.
+              Beyond the screen, I enjoy shooting photos, exploring creative ideas,
+              and pushing myself to improve. When I&apos;m not creating, you&apos;ll
+              probably find me training at the gym.
             </p>
-
             {/* CTA + SOCIALS */}
             <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-6">
               <a

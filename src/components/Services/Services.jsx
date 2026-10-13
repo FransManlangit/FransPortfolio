@@ -90,24 +90,26 @@ const SERVICES = [
   },
 ];
 
+
 const PROCESS = [
   {
     title: "Discover",
-    text: "I listen first and turn your ideas into clear requirements, using my client-service and sales background.",
+    text: "I learn about your brand, goals, and target audience to build a clear content direction.",
   },
   {
-    title: "Design",
-    text: "Layouts and flows planned for desktop and mobile before the build starts.",
+    title: "Plan & Create",
+    text: "I develop content ideas, engaging hooks, captions, and visuals that align with your brand.",
   },
   {
-    title: "Build",
-    text: "Agile sprints with regular progress updates, a clean Git workflow and testing along the way.",
+    title: "Publish",
+    text: "I prepare and organize content for your chosen platforms, keeping your brand consistent and on schedule.",
   },
   {
-    title: "Deliver",
-    text: "Production-ready deployment, feedback rounds and support so it keeps working after launch.",
+    title: "Optimize",
+    text: "I review performance, identify opportunities for improvement, and refine content to better engage your audience.",
   },
 ];
+
 
 const SubHeading = ({ children }) => (
   <div className="mb-8">
