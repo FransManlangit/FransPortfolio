@@ -62,27 +62,29 @@ const SERVICES = [
   },
   {
     icon: FaPenRuler,
-    title: "UI/UX & Graphic Design",
+    title: "SOCIAL MEDIA STRATEGY & MANAGEMENT",
     description:
-      "Clean, on-brand visuals that make your product and your content look professional.",
+      "I help businesses build a consistent online presence through thoughtful content planning, engaging copy, and on-brand visuals designed to connect with their audience.",
     points: [
-      "Website & mobile UI/UX mockups",
-      "Logo & branding design",
-      "Social media posts, banners & posters",
-      "YouTube thumbnails & channel art",
+      "Social media content planning & calendars",
+      "Captions, hooks & calls to action (CTAs)",
+      "Brand consistency & visual direction",
+      "Post scheduling & content organization",
+      
     ],
-    tags: ["Photoshop", "UI/UX", "Branding"],
+    tags: ["Canva", "Adobe Photoshop", "META Business Suite", "Hootsuite"],
   },
   {
     icon: FaFilm,
-    title: "Video Editing",
+    title: "CONTENT CREATION & VIDEO EDITING",
     description:
-      "Engaging, well-paced videos for social media, marketing and content creation.",
+      "I create eye-catching visuals and engaging video content that help brands communicate their message, showcase their products, and connect with audiences across social platforms.",
     points: [
-      "YouTube videos (vlogs, tutorials, reviews)",
-      "Short-form: TikTok, Reels & Shorts",
-      "Ads & promotional videos",
-      "Long-form: podcasts & documentaries",
+      "Short-form videos for TikTok, Instagram Reels & YouTube Shorts",
+      "Promotional videos & product showcases",
+      "Engaging hooks, subtitles & storytelling",
+      "Social media graphics, carousels & banners",
+      "YouTube thumbnails & long-form video editing",
     ],
     tags: ["CapCut", "DaVinci Resolve"],
   },
