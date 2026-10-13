@@ -338,7 +338,7 @@ const Hero = () => {
 
           <div style={{ minHeight: "clamp(64px, 7cqw, 120px)" }}>
             <RotatingText
-              texts={["Full-Stack Developer", "Mobile Developer", "React Engineer",]}
+              texts={["Full-Stack Developer", "Mobile Developer", "React Engineer", "Social Media Manager"]}
               splitBy="words"
               mainClassName="leading-[1.4] py-2 pr-6"
               style={{
