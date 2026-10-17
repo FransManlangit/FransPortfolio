@@ -60,20 +60,20 @@ const SERVICES = [
     ],
     tags: ["WordPress", "HTML5", "CSS3", "Responsive"],
   },
-  {
-    icon: FaPenRuler,
-    title: "SOCIAL MEDIA STRATEGY & MANAGEMENT",
-    description:
-      "I help businesses build a consistent online presence through thoughtful content planning, engaging copy, and on-brand visuals designed to connect with their audience.",
-    points: [
-      "Social media content planning & calendars",
-      "Captions, hooks & calls to action (CTAs)",
-      "Brand consistency & visual direction",
-      "Post scheduling & content organization",
+  // {
+  //   icon: FaPenRuler,
+  //   title: "SOCIAL MEDIA STRATEGY & MANAGEMENT",
+  //   description:
+  //     "I help businesses build a consistent online presence through thoughtful content planning, engaging copy, and on-brand visuals designed to connect with their audience.",
+  //   points: [
+  //     "Social media content planning & calendars",
+  //     "Captions, hooks & calls to action (CTAs)",
+  //     "Brand consistency & visual direction",
+  //     "Post scheduling & content organization",
 
-    ],
-    tags: ["Canva", "Adobe Photoshop", "META Business Suite", "Hootsuite"],
-  },
+  //   ],
+  //   tags: ["Canva", "Adobe Photoshop", "META Business Suite", "Hootsuite"],
+  // },
   {
     icon: FaFilm,
     title: "CONTENT CREATION & VIDEO EDITING",
@@ -93,20 +93,20 @@ const SERVICES = [
 
 const PROCESS = [
   {
-    title: "Discover",
-    text: "I learn about your brand, goals, and target audience to build a clear content direction.",
+    title: "Discover & Define",
+    text: "I turn your ideas and business needs into clear project requirements.",
   },
   {
-    title: "Plan & Create",
-    text: "I develop content ideas, engaging hooks, captions, and visuals that align with your brand.",
+    title: "Design & Plan",
+    text: "I map user flows and plan intuitive, responsive interfaces.",
   },
   {
-    title: "Publish",
-    text: "I prepare and organize content for your chosen platforms, keeping your brand consistent and on schedule.",
+    title: "Develop & Integrate",
+    text: "I build functional web and mobile apps with modern technologies.",
   },
   {
-    title: "Optimize",
-    text: "I review performance, identify opportunities for improvement, and refine content to better engage your audience.",
+    title: "Test & Deliver",
+    text: "I build functional web and mobile apps with modern technologies.",
   },
 ];
 

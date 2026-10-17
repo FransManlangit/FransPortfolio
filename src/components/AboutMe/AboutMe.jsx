@@ -42,9 +42,9 @@ const WHAT_I_CAN_DO = [
   "Next.js & React",
   "WordPress Websites",
   "Video Editing & Content Creation",
-  "Social Media Engagement",
-  "Content Planning & Scheduling",
-  "Social Media Management",
+  // "Social Media Engagement",
+  // "Content Planning & Scheduling",
+  // "Social Media Management",
 ];
 
 const SOCIALS = [

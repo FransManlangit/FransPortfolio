@@ -315,10 +315,10 @@ const Hero = () => {
             <p>Open to remote</p>
           </div>
           <Dash right />
-          {/* <div className={`${labelClass} !text-right mt-6`} style={labelStyle}>
-            <p>Photography</p>
-            <p>Fashion</p>
-          </div> */}
+           <div className={`${labelClass} !text-right mt-6`} style={labelStyle}>
+            {/* <p>Website Design & WordPress</p>
+            <p>Fashion</p> */}
+          </div> 
           {/* <Dash right /> */}
         </div>
 
@@ -338,7 +338,7 @@ const Hero = () => {
 
           <div style={{ minHeight: "clamp(64px, 7cqw, 120px)" }}>
             <RotatingText
-              texts={["Full-Stack Developer", "Mobile Developer", "React Engineer", "Social Media Manager"]}
+              texts={["Full-Stack Developer", "Mobile Developer", "React Engineer"]}
               splitBy="words"
               mainClassName="leading-[1.4] py-2 pr-6"
               style={{
