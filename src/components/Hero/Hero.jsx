@@ -179,9 +179,10 @@ const PHOTO_POSITION = "60% 50%";
 
 // All desktop sizes use "cqw" (1% of the hero stage width), so everything
 // scales together like the mockup instead of drifting with the window.
-const labelStyle = { fontSize: "clamp(9px, 0.78cqw, 13px)" };
+// Minimum bumped from 9px to 10px so the small labels stay readable.
+const labelStyle = { fontSize: "clamp(10px, 0.8cqw, 13px)" };
 const labelClass =
-  "tracking-[0.22em] uppercase text-[#1A1A1A] font-medium leading-relaxed text-left";
+  "tracking-[0.18em] uppercase text-[#1A1A1A] font-medium leading-relaxed text-left";
 
 const Dash = ({ right = false }) => (
   <span
@@ -190,6 +191,14 @@ const Dash = ({ right = false }) => (
   />
 );
 
+/*
+  LAYOUT FIXES (desktop)
+  - .hf-labels-l: shorter lines + moved left so nothing runs under the big "F".
+  - .hf-labels-r: moved to the free space top-right (right of the strap, below
+    the nav) so the badge can no longer cover the text.
+  - .hf-badge: the strap now starts BELOW the navbar (max(76px, 5cqw)) and fades
+    in, so it no longer sits on top of the "Services" link.
+*/
 const css = `
 .hf-stage{
   position:relative; container-type:inline-size; width:100%;
@@ -205,10 +214,10 @@ const css = `
   }
   .hf-abs{position:absolute}
   .hf-title{left:19.5%; top:15.5%}
-  .hf-labels-l{left:5.5%; top:22%}
-  .hf-labels-r{right:4%; top:66%}
+  .hf-labels-l{left:4%; top:22%}
+  .hf-labels-r{right:4%; top:max(96px, 14.5%)}
   .hf-left{left:14%; top:48.5%}
-  .hf-badge{left:60.5%; top:0; width:22cqw}
+  .hf-badge{left:60.5%; top:max(76px, 5cqw); width:22cqw}
   .hf-camera{right:-2.5%; top:-2%; height:62%; width:auto}
   .hf-stats{left:14%; bottom:11%}
   .hf-brush{width:min(30%, calc(100vh * 0.435)); width:min(30%, calc(100svh * 0.435))}
@@ -295,9 +304,8 @@ const Hero = () => {
         {/* LEFT LABELS (desktop only) */}
         <div className="hf-abs hf-labels-l hidden md:block z-30">
           <div className={labelClass} style={labelStyle}>
-            <p>Portfolio 2026</p>
-            <p>Taguig, PH</p>
             <p>Full-Stack Developer</p>
+            <p>Taguig, PH</p>
           </div>
           <Dash />
           <div className={`${labelClass} mt-8`} style={labelStyle}>
@@ -307,19 +315,18 @@ const Hero = () => {
           <Dash />
         </div>
 
-        {/* RIGHT LABELS (desktop only) */}
+        {/* RIGHT LABELS (desktop only): top-right, clear of the badge */}
         <div className="hf-abs hf-labels-r hidden md:block z-30 text-right">
           <div className={`${labelClass} !text-right`} style={labelStyle}>
             <p>Available for work</p>
-            <p>React · Next.js · React Native</p>
-            <p>Open to remote</p>
+            <p>Full-time · Remote</p>
           </div>
           <Dash right />
-           <div className={`${labelClass} !text-right mt-6`} style={labelStyle}>
-            {/* <p>Website Design & WordPress</p>
-            <p>Fashion</p> */}
-          </div> 
-          {/* <Dash right /> */}
+          <div className={`${labelClass} !text-right mt-6`} style={labelStyle}>
+            <p>React · Next.js</p>
+            <p>React Native · Node.js</p>
+          </div>
+          <Dash right />
         </div>
 
         {/* LEFT CONTENT */}
@@ -351,11 +358,11 @@ const Hero = () => {
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2">
             <Link
-              to="/contact"
+              to="/Projects"
               className="inline-flex items-center justify-center gap-2 text-white px-7 py-3 rounded-full shadow-lg hover:scale-105 hover:brightness-90 transition duration-300"
               style={{ backgroundColor: RED }}
             >
-              Hire Me <FaArrowRight className="text-sm" />
+              View My Work <FaArrowRight className="text-sm" />
             </Link>
 
             <a
@@ -368,6 +375,13 @@ const Hero = () => {
               <span className="underline underline-offset-4">LinkedIn</span>
             </a>
           </div>
+
+          {/* MOBILE ONLY: the side labels are hidden on small screens, so keep the key info here */}
+          <p className="md:hidden mt-4 text-[11px] tracking-[0.18em] uppercase font-medium leading-relaxed text-[#1A1A1A]">
+            Open to full-time & remote roles
+            <br />
+            React · Next.js · React Native
+          </p>
         </motion.div>
 
         {/* ID BADGE ON LANYARD */}
@@ -387,12 +401,14 @@ const Hero = () => {
             style={{ transformOrigin: "50% 0%" }}
             className="flex flex-col items-center drop-shadow-2xl"
           >
-            {/* strap */}
+            {/* strap: shorter now, and fades in at the top so it never sits on the nav links */}
             <div
               className="bg-[#141414] rounded-b-sm"
               style={{
                 width: "clamp(26px, 4cqw, 64px)",
-                height: "clamp(120px, 15.5cqw, 320px)",
+                height: "clamp(90px, 9.6cqw, 220px)",
+                WebkitMaskImage: "linear-gradient(to bottom, transparent 0, #000 35%)",
+                maskImage: "linear-gradient(to bottom, transparent 0, #000 35%)",
               }}
             />
 
@@ -470,5 +486,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
-

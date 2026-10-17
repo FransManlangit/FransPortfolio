@@ -160,15 +160,14 @@ const Services = () => {
             className="mt-6 mx-auto max-w-2xl text-sm md:text-base leading-relaxed"
             style={{ color: BODY }}
           >
-            I combine{" "}
+            I build{" "}
             <span
               className="font-semibold underline decoration-2 underline-offset-4"
               style={{ color: INK, textDecorationColor: RED }}
             >
-              IT skills and creative design
+              full-stack web and mobile products,
             </span>{" "}
-            to turn business ideas into digital products, create engaging videos, and
-            manage social media presence to help brands grow online.
+          and handle the design and video that launch them
           </p>
         </motion.div>
 

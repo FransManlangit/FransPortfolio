@@ -156,7 +156,7 @@ const AboutMe = () => {
               <div className="bg-white p-3 pb-12 shadow-[0_18px_40px_rgba(26,26,26,0.25)]">
                 <div className="aspect-[4/5] overflow-hidden bg-[#E9E7E2]">
                   <img
-                    src="/images/Gym.JPEG"
+                    src="/images/FRANSPROF.JPEG"
                     alt="Frans Manlangit"
                     draggable="false"
                     className="w-full h-full object-cover mix-blend-multiply"
@@ -183,20 +183,21 @@ const AboutMe = () => {
             style={{ color: BODY }}
           >
             <p>
-              I&apos;m an IT graduate from Taguig who enjoys turning ideas into{" "}
-              <Underlined>engaging digital experiences</Underlined>. From web and mobile
-              development to video editing and content creation, I love combining
-              technology with creativity.
+              I&apos;m a <Underlined>full-stack developer</Underlined> from Taguig with a
+              BS in Information Technology from TUP, where I was a Dean&apos;s Lister
+              and led our capstone team.
             </p>
             <p>
-              My background spans <Underlined>full-stack development</Underlined> with
-              React, Next.js, React Native, and Node.js, alongside creating visuals
-              and content that are clean, purposeful, and user-friendly.
+              I spent 1.5 years as a mobile and web developer at D&apos;Horizon,
+              building apps with{" "}
+              <Underlined>React, Next.js, React Native, and Node.js</Underlined>, and
+              I&apos;ve delivered WordPress work for a client in Texas. Today, my
+              customer service role keeps my communication with clients sharp.
             </p>
             <p>
-              Beyond the screen, I enjoy shooting photos, exploring creative ideas,
-              and pushing myself to improve. When I&apos;m not creating, you&apos;ll
-              probably find me training at the gym.
+              I also design and edit video, so what I build looks as good as it
+              works. Outside of work, you&apos;ll find me shooting photos or training
+              at the gym.
             </p>
             {/* CTA + SOCIALS */}
             <div className="mt-3 flex flex-col sm:flex-row sm:items-center gap-6">
