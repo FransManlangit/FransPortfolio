@@ -36,7 +36,13 @@ export default async function handler(req, res) {
   }
 
   if (!process.env.GROQ_API_KEY) {
-    return res.status(500).json({ error: "Server is not configured." });
+    return res.status(500).json({
+      error: "Server is not configured.",
+      vercelEnv: process.env.VERCEL_ENV, // production / preview / development
+      similarNames: Object.keys(process.env).filter((k) =>
+        k.toUpperCase().includes("GROQ"),
+      ),
+    });
   }
 
   try {
@@ -46,23 +52,33 @@ export default async function handler(req, res) {
     }
 
     const clean = messages
-      .filter((m) => ["user", "assistant"].includes(m.role) && typeof m.content === "string")
+      .filter(
+        (m) =>
+          ["user", "assistant"].includes(m.role) &&
+          typeof m.content === "string",
+      )
       .slice(-MAX_HISTORY)
-      .map((m) => ({ role: m.role, content: m.content.slice(0, MAX_MESSAGE_CHARS) }));
+      .map((m) => ({
+        role: m.role,
+        content: m.content.slice(0, MAX_MESSAGE_CHARS),
+      }));
 
-    const upstream = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+    const upstream = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          messages: [{ role: "system", content: BOT_CONTEXT }, ...clean],
+          temperature: 0.4,
+          max_tokens: 350,
+        }),
       },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [{ role: "system", content: BOT_CONTEXT }, ...clean],
-        temperature: 0.4,
-        max_tokens: 350,
-      }),
-    });
+    );
 
     if (!upstream.ok) {
       console.error("Groq error:", upstream.status, await upstream.text());
@@ -77,7 +93,9 @@ export default async function handler(req, res) {
 
     const data = await upstream.json();
     const reply = data.choices?.[0]?.message?.content?.trim();
-    return res.status(200).json({ reply: reply || "Sorry, I couldn't come up with a reply." });
+    return res
+      .status(200)
+      .json({ reply: reply || "Sorry, I couldn't come up with a reply." });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong." });
