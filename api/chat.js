@@ -76,7 +76,7 @@ export default async function handler(req, res) {
           model: MODEL,
           messages: [{ role: "system", content: BOT_CONTEXT }, ...clean],
           temperature: 0.4,
-          max_tokens: 350,
+          max_tokens: 1000,
         }),
       },
     );
