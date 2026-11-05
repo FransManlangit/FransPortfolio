@@ -80,13 +80,26 @@ export default async function handler(req, res) {
       },
     );
 
-   if (!upstream.ok) {
+  if (!upstream.ok) {
   const detail = await upstream.text();
   console.error("Groq error:", upstream.status, detail);
+
+  let availableModels;
+  try {
+    const list = await fetch("https://api.groq.com/openai/v1/models", {
+      headers: { Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
+    });
+    const json = await list.json();
+    availableModels = json.data?.map((m) => m.id) ?? json;
+  } catch (e) {
+    availableModels = "could not fetch model list";
+  }
+
   return res.status(upstream.status === 429 ? 429 : 502).json({
     error: "The assistant is unavailable right now.",
+    model: MODEL,
     groqStatus: upstream.status,
-    groqDetail: detail.slice(0, 300),
+    availableModels,
   });
 }
 
