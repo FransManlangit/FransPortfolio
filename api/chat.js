@@ -80,16 +80,15 @@ export default async function handler(req, res) {
       },
     );
 
-    if (!upstream.ok) {
-      console.error("Groq error:", upstream.status, await upstream.text());
-      const status = upstream.status === 429 ? 429 : 502;
-      return res.status(status).json({
-        error:
-          status === 429
-            ? "The assistant is busy right now. Try again shortly."
-            : "The assistant is unavailable right now.",
-      });
-    }
+   if (!upstream.ok) {
+  const detail = await upstream.text();
+  console.error("Groq error:", upstream.status, detail);
+  return res.status(upstream.status === 429 ? 429 : 502).json({
+    error: "The assistant is unavailable right now.",
+    groqStatus: upstream.status,
+    groqDetail: detail.slice(0, 300),
+  });
+}
 
     const data = await upstream.json();
     const reply = data.choices?.[0]?.message?.content?.trim();
