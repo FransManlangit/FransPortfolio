@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import MessageBubble from "./MessageBubble";
-import { useChat } from "./useChat";
+import { useChat } from "./UseChat";
 
 const SUGGESTIONS = [
   "What are Frans's top skills?",
