@@ -26,7 +26,7 @@ LINKS:
 - Portfolio: https://frans-portfolio-rho.vercel.app/
 `;
 
-const MODEL = "id-you-copied-from-playground";
+const MODEL = "llama-3.3-70b-versatile";
 const MAX_MESSAGE_CHARS = 500;
 const MAX_HISTORY = 8;
 
