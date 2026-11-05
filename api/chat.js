@@ -26,7 +26,7 @@ LINKS:
 - Portfolio: https://frans-portfolio-rho.vercel.app/
 `;
 
-const MODEL = "id-from-your-list";
+const MODEL = "WHISPER-1";
 const MAX_MESSAGE_CHARS = 500;
 const MAX_HISTORY = 8;
 
