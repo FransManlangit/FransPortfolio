@@ -13,8 +13,8 @@ module.exports = {
         poppins: ["Poppins", "sans-serif"],
       },
       colors: {
-        primary: "#a4e735",
-        background: "#090909",
+        primary: "#e4001b",
+        background: "#f4f3f1",
       },
     },
   },

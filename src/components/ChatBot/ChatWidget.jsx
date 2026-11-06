@@ -1,12 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import MessageBubble from "./MessageBubble";
-import { useChat } from "./UseChat";
+import { useChat } from "./UseChat"; // match your actual filename casing
+import { FAQ } from "../../data/faq";
 
-const SUGGESTIONS = [
-  "What are Frans's top skills?",
-  "Tell me about his projects",
-  "Is he open to work?",
-];
+const SUGGESTIONS = FAQ.slice(0, 5).map((f) => f.q);
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
@@ -25,10 +22,10 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 font-sans">
+    <div className="fixed bottom-5 right-5 z-50">
       {/* Chat window */}
       <div
-        className={`mb-3 flex h-[28rem] w-[calc(100vw-2.5rem)] max-w-sm origin-bottom-right flex-col overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-900 shadow-2xl transition-all duration-200 ${
+        className={`mb-3 flex h-[30rem] w-[calc(100vw-2.5rem)] max-w-[22rem] origin-bottom-right flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)] transition-all duration-200 ${
           open
             ? "pointer-events-auto scale-100 opacity-100"
             : "pointer-events-none scale-95 opacity-0"
@@ -38,33 +35,39 @@ export default function ChatWidget() {
         aria-hidden={!open}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-950 px-4 py-3">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+        <div className="flex items-center justify-between px-5 py-4">
+          <div className="flex items-center gap-2.5">
+            <span className="h-2 w-2 rounded-full bg-[#e4001b]" />
             <div>
-              <p className="text-sm font-semibold text-white">Ask Frans's AI</p>
-              <p className="text-xs text-zinc-500">Usually replies in seconds</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-black">
+                Ask Frans's AI
+              </p>
+              <p className="mt-0.5 text-[10px] uppercase tracking-[0.15em] text-neutral-400">
+                Available for work
+              </p>
             </div>
           </div>
-          <div className="flex gap-1">
+          <div className="flex items-center gap-1">
             <button
               onClick={reset}
-              className="rounded-md px-2 py-1 text-xs text-zinc-400 hover:bg-zinc-800 hover:text-white"
+              className="rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-neutral-400 transition hover:text-black"
             >
               Reset
             </button>
             <button
               onClick={() => setOpen(false)}
               aria-label="Close chat"
-              className="rounded-md px-2 py-1 text-zinc-400 hover:bg-zinc-800 hover:text-white"
+              className="flex h-7 w-7 items-center justify-center rounded-full text-neutral-400 transition hover:bg-neutral-100 hover:text-black"
             >
               ✕
             </button>
           </div>
         </div>
 
+        <div className="h-px bg-neutral-100" />
+
         {/* Messages */}
-        <div className="flex-1 space-y-3 overflow-y-auto p-4">
+        <div className="flex-1 space-y-3 overflow-y-auto px-5 py-4">
           {messages.map((m, i) => (
             <MessageBubble key={i} {...m} />
           ))}
@@ -75,7 +78,7 @@ export default function ChatWidget() {
                 <button
                   key={s}
                   onClick={() => send(s)}
-                  className="rounded-full border border-zinc-700 px-3 py-1 text-xs text-zinc-300 hover:border-indigo-500 hover:text-white"
+                  className="rounded-full border border-neutral-200 px-3 py-1.5 text-[11px] text-neutral-700 transition hover:border-black hover:bg-black hover:text-white"
                 >
                   {s}
                 </button>
@@ -85,11 +88,11 @@ export default function ChatWidget() {
 
           {loading && (
             <div className="flex justify-start">
-              <div className="flex gap-1 rounded-2xl rounded-bl-sm bg-zinc-800 px-4 py-3">
+              <div className="flex gap-1 rounded-2xl rounded-bl-sm bg-neutral-100 px-4 py-3">
                 {[0, 150, 300].map((d) => (
                   <span
                     key={d}
-                    className="h-1.5 w-1.5 animate-bounce rounded-full bg-zinc-400"
+                    className="h-1.5 w-1.5 animate-bounce rounded-full bg-neutral-400"
                     style={{ animationDelay: `${d}ms` }}
                   />
                 ))}
@@ -98,7 +101,7 @@ export default function ChatWidget() {
           )}
 
           {error && (
-            <p className="rounded-lg border border-red-900/50 bg-red-950/40 px-3 py-2 text-xs text-red-300">
+            <p className="rounded-xl bg-red-50 px-3 py-2 text-xs text-[#e4001b]">
               {error}
             </p>
           )}
@@ -106,37 +109,39 @@ export default function ChatWidget() {
         </div>
 
         {/* Input */}
-        <form onSubmit={submit} className="flex gap-2 border-t border-zinc-800 p-3">
+        <form onSubmit={submit} className="flex items-center gap-2 px-4 pb-4 pt-2">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             maxLength={500}
             placeholder="Ask about my work..."
             disabled={loading}
-            className="flex-1 rounded-xl bg-zinc-800 px-3 py-2 text-sm text-white placeholder-zinc-500 outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60"
+            className="flex-1 rounded-full border border-neutral-200 bg-white px-4 py-2.5 text-[13px] text-black placeholder-neutral-400 outline-none transition focus:border-black disabled:opacity-60"
           />
           <button
             type="submit"
             disabled={loading || !input.trim()}
-            className="rounded-xl bg-indigo-600 px-4 text-sm font-medium text-white transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-40"
+            aria-label="Send"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black text-white transition hover:bg-[#e4001b] disabled:cursor-not-allowed disabled:opacity-30"
           >
-            Send
+            →
           </button>
         </form>
       </div>
 
-      {/* Floating bubble */}
+      {/* Floating button */}
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? "Close chat" : "Open chat"}
-        className="ml-auto flex h-14 w-14 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg transition hover:scale-105 hover:bg-indigo-500"
+        className="ml-auto flex items-center gap-2 rounded-full bg-black px-5 py-3 text-[13px] font-semibold text-white shadow-lg transition hover:scale-105"
       >
         {open ? (
-          <span className="text-xl">✕</span>
+          <>Close <span aria-hidden>✕</span></>
         ) : (
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
+          <>
+            <span className="h-2 w-2 animate-pulse rounded-full bg-[#e4001b]" />
+            Ask my AI
+          </>
         )}
       </button>
     </div>

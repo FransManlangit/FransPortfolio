@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import { FAQ } from "../../data/faq";
 
 const GREETING = {
   role: "assistant",
@@ -16,6 +17,20 @@ export function useChat() {
     async (text) => {
       const content = text.trim();
       if (!content || loading) return;
+
+      // Instant answer for FAQ chips (no API call, no quota used)
+      const canned = FAQ.find(
+        (f) => f.q.toLowerCase() === content.toLowerCase()
+      );
+      if (canned) {
+        setError(null);
+        setMessages((m) => [
+          ...m,
+          { role: "user", content },
+          { role: "assistant", content: canned.a },
+        ]);
+        return;
+      }
 
       setError(null);
       const next = [...messages, { role: "user", content }];

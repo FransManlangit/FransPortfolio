@@ -1,4 +1,17 @@
 const BOT_CONTEXT = `
+
+FAQ:
+Q: Do you take freelance projects?
+A: Yes. Frans is open to freelance web development projects. 
+Q: What's your timezone / working hours?
+A:
+• Location: Manila, Philippines
+• Time Zone Name: Philippine Standard Time (PST / PHT)
+• Time Zone Offset: UTC+8 (or GMT+8)
+• IANA/Olson Database Identifier: Asia/Manila
+• Daylight Saving Time (DST): No (The Philippines does not observe DST)
+• Core Working Hours: 09:00 AM to 04:00 PM PST
+
 You are the AI assistant on Frans Adryhel Manlangit's portfolio website.
 You speak on Frans's behalf to visitors such as recruiters, clients and fellow developers.
 
@@ -21,29 +34,44 @@ EXPERIENCE:
 SKILLS:
 - MERN stack, React Native (Expo), Next.js, TypeScript, Tailwind CSS, MySQL, Git, WordPress.
 
+AVAILABILITY:
+- Frans is available for work: full-time and remote opportunities. Visitors can reach him through the Contact Me button on this site.
+
 LINKS:
 - GitHub: https://github.com/FransManlangit
 - Portfolio: https://frans-portfolio-rho.vercel.app/
 `;
 
-
 const MODEL = "openai/gpt-oss-20b";
 const MAX_MESSAGE_CHARS = 500;
 const MAX_HISTORY = 8;
+
+// Best-effort rate limit (in-memory, resets on cold starts)
+const hits = new Map();
+const WINDOW_MS = 60_000;
+const MAX_PER_WINDOW = 10;
+
+function rateLimited(ip) {
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < WINDOW_MS);
+  recent.push(now);
+  hits.set(ip, recent);
+  return recent.length > MAX_PER_WINDOW;
+}
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  const ip = req.headers["x-forwarded-for"]?.split(",")[0] || "unknown";
+  if (rateLimited(ip)) {
+    return res.status(429).json({ error: "Too many messages. Please wait a minute." });
+  }
+
   if (!process.env.GROQ_API_KEY) {
-    return res.status(500).json({
-      error: "Server is not configured.",
-      vercelEnv: process.env.VERCEL_ENV, // production / preview / development
-      similarNames: Object.keys(process.env).filter((k) =>
-        k.toUpperCase().includes("GROQ"),
-      ),
-    });
+    console.error("GROQ_API_KEY is missing");
+    return res.status(500).json({ error: "Server is not configured." });
   }
 
   try {
@@ -53,62 +81,37 @@ export default async function handler(req, res) {
     }
 
     const clean = messages
-      .filter(
-        (m) =>
-          ["user", "assistant"].includes(m.role) &&
-          typeof m.content === "string",
-      )
+      .filter((m) => ["user", "assistant"].includes(m.role) && typeof m.content === "string")
       .slice(-MAX_HISTORY)
-      .map((m) => ({
-        role: m.role,
-        content: m.content.slice(0, MAX_MESSAGE_CHARS),
-      }));
+      .map((m) => ({ role: m.role, content: m.content.slice(0, MAX_MESSAGE_CHARS) }));
 
-    const upstream = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: MODEL,
-          messages: [{ role: "system", content: BOT_CONTEXT }, ...clean],
-          temperature: 0.4,
-          max_tokens: 1000,
-        }),
+    const upstream = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
       },
-    );
-
-  if (!upstream.ok) {
-  const detail = await upstream.text();
-  console.error("Groq error:", upstream.status, detail);
-
-  let availableModels;
-  try {
-    const list = await fetch("https://api.groq.com/openai/v1/models", {
-      headers: { Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: [{ role: "system", content: BOT_CONTEXT }, ...clean],
+        temperature: 0.4,
+        max_tokens: 1000,
+      }),
     });
-    const json = await list.json();
-    availableModels = json.data?.map((m) => m.id) ?? json;
-  } catch (e) {
-    availableModels = "could not fetch model list";
-  }
 
-  return res.status(upstream.status === 429 ? 429 : 502).json({
-    error: "The assistant is unavailable right now.",
-    model: MODEL,
-    groqStatus: upstream.status,
-    availableModels,
-  });
-}
+    if (!upstream.ok) {
+      console.error("Groq error:", upstream.status, await upstream.text());
+      return res.status(upstream.status === 429 ? 429 : 502).json({
+        error:
+          upstream.status === 429
+            ? "The assistant is busy right now. Try again shortly."
+            : "The assistant is unavailable right now.",
+      });
+    }
 
     const data = await upstream.json();
     const reply = data.choices?.[0]?.message?.content?.trim();
-    return res
-      .status(200)
-      .json({ reply: reply || "Sorry, I couldn't come up with a reply." });
+    return res.status(200).json({ reply: reply || "Sorry, I couldn't come up with a reply." });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Something went wrong." });
