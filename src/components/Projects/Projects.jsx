@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa6";
 import { PROJECTS } from "../../constants";
+import { VIDEOS } from "../../constants/video";
+import { BG, INK, RED, BODY, TILTS } from "../../constants/theme";
+import VideoCard from "../VideoEdits/VideoCard";
+import VideoModal from "../VideoEdits/VideoModal";
 
-// ===== PALETTE: same red / ink / off-white as Home + About =====
-const BG = "#F4F2EE";
-const INK = "#1A1A1A";
-const RED = "#E30613";
-const BODY = "#333333";
+
+
 
 const scriptFont = { fontFamily: "'Yellowtail', cursive" };
 
@@ -19,14 +20,23 @@ const TABS = [
   { id: "videos", label: "Video Editing" },
 ];
 
-// Small alternating tilt so the grid feels like pinned prints
-const TILTS = [-1.5, 1.2, -0.8, 1.6];
+
+
+
+
+
+
+
+
+
+
 
 const Projects = () => {
   const [activeTab, setActiveTab] = useState("websites");
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [cursorVisible, setCursorVisible] = useState(false);
-
+  const [activeVideo, setActiveVideo] = useState(null);
+  const closeVideo = useCallback(() => setActiveVideo(null), []);
   // Cards show in the same order as the PROJECTS array in constants
   const projects = PROJECTS;
 
@@ -132,11 +142,11 @@ const Projects = () => {
               const tilt = TILTS[i % TILTS.length];
               const linkProps = href
                 ? {
-                    href,
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                    "aria-label": `View ${project.name}`,
-                  }
+                  href,
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                  "aria-label": `View ${project.name}`,
+                }
                 : {};
 
               return (
@@ -150,9 +160,8 @@ const Projects = () => {
                   whileHover={{ rotate: 0, y: -8 }}
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                  className={`group relative block bg-white p-3 pb-4 shadow-[0_18px_40px_rgba(26,26,26,0.18)] ${
-                    href ? "cursor-pointer" : ""
-                  }`}
+                  className={`group relative block bg-white p-3 pb-4 shadow-[0_18px_40px_rgba(26,26,26,0.18)] ${href ? "cursor-pointer" : ""
+                    }`}
                 >
                   {/* tape */}
                   <span
@@ -215,22 +224,37 @@ const Projects = () => {
         )}
 
         {/* ===== VIDEOS (placeholder until you add video projects) ===== */}
-        {activeTab === "videos" && (
-          <div
-            className="mt-14 md:mt-16 mx-auto max-w-2xl border-2 border-dashed rounded-lg px-6 py-16 text-center"
-            style={{ borderColor: INK }}
-          >
-            <p className="text-5xl md:text-6xl leading-none" style={{ ...scriptFont, color: RED }}>
-              Coming soon
-            </p>
-            <p
-              className="mt-4 text-[11px] md:text-xs uppercase font-medium tracking-[0.3em]"
-              style={{ color: BODY }}
+        {activeTab === "videos" &&
+          (VIDEOS.length > 0 ? (
+            <>
+              <div className="mt-14 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-x-8 gap-y-14">
+                {VIDEOS.map((video, i) => (
+                  <VideoCard key={video.id} video={video} index={i} onPlay={setActiveVideo} />
+                ))}
+              </div>
+
+              {/* <div className="mt-14 text-center">
+                <a
+                  href="https://www.youtube.com/@YOUR_CHANNEL"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full border-2 text-sm md:text-base font-medium text-white transition duration-300 hover:scale-105"
+                  style={{ backgroundColor: RED, borderColor: RED }}
+                >
+                  More on YouTube <FaArrowRight />
+                </a>
+              </div> */}
+            </>
+          ) : (
+            <div
+              className="mt-14 md:mt-16 mx-auto max-w-2xl border-2 border-dashed rounded-lg px-6 py-16 text-center"
+              style={{ borderColor: INK }}
             >
-              Video editing reel is on the way
-            </p>
-          </div>
-        )}
+              <p className="text-5xl md:text-6xl leading-none" style={{ ...scriptFont, color: RED }}>
+                Coming soon
+              </p>
+            </div>
+          ))}
       </div>
 
       {/* ===== CUSTOM CURSOR LABEL ===== */}
@@ -249,6 +273,7 @@ const Projects = () => {
           </div>
         </div>
       )}
+      {activeVideo && <VideoModal video={activeVideo} onClose={closeVideo} />}
     </section>
   );
 };

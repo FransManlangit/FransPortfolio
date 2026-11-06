@@ -17,7 +17,8 @@ import {
   bla,
   dna,
   silog,
-  jicus
+  jicus,
+
 } from "../assets";
 
 export const PROJECTS = [

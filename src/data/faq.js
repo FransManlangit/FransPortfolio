@@ -9,8 +9,8 @@ export const FAQ = [
     a: "Yes. Frans is available for full-time and remote work. You can reach him through the Contact Me button at the top of this page.",
   },
   {
-    q: "Tell me about his projects",
-    a: "ADD YOUR TOP 3 PROJECTS HERE: name, what it does, tech used.",
+    q: "How can contact him?",
+    a: "You can reach him through the Contact page and you can send him a message.",
   },
   {
     q: "What's his experience?",
