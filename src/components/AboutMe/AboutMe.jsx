@@ -51,7 +51,7 @@ const SOCIALS = [
   { icon: FaGithub, label: "GitHub", href: "https://github.com/FransManlangit" },
   { icon: FaLinkedinIn, label: "LinkedIn", href: "https://www.linkedin.com/in/frans-manlangit/" },
   { icon: FaFacebookF, label: "Facebook", href: "https://www.facebook.com/fransmanlangit25" }, // TODO: add your link
-  // { icon: FaInstagram, label: "Instagram", href: "#" }, // TODO: add your link
+  { icon: FaInstagram, label: "Instagram", href: "https://www.instagram.com/flowst8clothing/" }, // TODO: add your link
 ];
 
 const fadeUp = {
